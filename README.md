@@ -6,9 +6,9 @@
 HTTP Static file server written in Go.
 
 ## Usage
-1. Create `.env` file with fields:
+1. Create `.env` file with fields:<br>
     `PORT` - port at which http will be served<br>
-    `FILES_DIR` - location with files which will be served<br>
+    `FILES_DIR` - location with files which will be served<br><br>
     Example
     ```
     PORT=8000
