@@ -5,6 +5,8 @@
 ## Description
 HTTP Static file server written in Go.
 
+<img src="https://i.imgur.com/5CHrSnq.png">
+
 ## Usage
 1. Create `.env` file with fields:<br>
     `PORT` - port at which http will be served<br>
