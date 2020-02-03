@@ -1,6 +1,4 @@
-<h1 align="center">
-<img src="https://i.imgur.com/VJiJiMO.png">
-</h1>
+![logo](https://i.imgur.com/VJiJiMO.png)
 
 ## Description
 HTTP Static file server written in Go.
