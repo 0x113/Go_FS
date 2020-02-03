@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>{ GO_FS } - Go file server</title>
+
+		<link rel="stylesheet" type="text/css" href="/-/assets/css/styles.css">
+		<link rel="stylesheet" type="text/css" href="/-/assets/css/milligram.min.css">
+		<link rel="stylesheet" type="text/css" href="/-/assets/css/remodal.min.css">
+		<link rel="stylesheet" type="text/css" href="/-/assets/css/remodal-default-theme.min.css">
+
+	</head>
+
+	<body>
+		<nav class="navigation">
+			<ul class="navigation_list">
+				<li class="navigation_item logo"><a href="/">{ GO_FS }</a></li>
+				<li class="navigation_item"><a href="#">search files</a></li>
+				<li class="navigation_item active"><a href="/">browser files</a></li>
+				<li class="navigation_item"><a href="#">tv shows</a></li>
+				<li class="navigation_item"><a href="#">movies</a></li>
+				<li class="navigation_item"><a href="#">music</a></li>
+				<li class="navigation_item"><a href="#">docs</a></li>
+			</ul>
+		</nav>
+
+		<div class="container" id="app">
+			<div class="row" id="infos">
+				<div class="column">
+					<p class="files-dir float-left">[[ .Directory ]]</p>
+				</div>
+				<div class="column">
+					<div class="float-right">
+						<button class="outline-button">New folder</button>
+						<button class="upload-button">Upload file</button>
+					</div>
+				</div>
+			</div>
+
+			<span id="back" onClick="back()"> << back</span>
+
+			<div class="row">
+				<div class="column">
+					<div class="files">
+						[[ range .Directories ]]
+
+						<p class="dir" id="[[ . ]]">
+						<span onClick="setHref([[ . ]])">[[ . ]]/</span>
+						</p>
+						[[ end ]] 
+						[[ range .Files ]] 
+						<p class="file">
+						<span onClick="serveFile([[ . ]])">[[ . ]]</span>
+						<!-- <span onClick="openFileModal([[ . ]])">[[ . ]]</span> -->
+						</p>
+
+						[[ end ]] 
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div data-remodal-id="file-modal">
+			<button data-remodal-action="close" class="remodal-close"></button>
+			<h1 id="file-modal-title"></h1>
+			<p id="file-modal-content"></p>
+		</div>
+
+		<div class="footer">
+			<p id="footer-logo">{ GO_FS }</p>
+			<p id="footer-info">
+				Coded by <a href="https://github.com/0x113" target="_blank">0x113</a>
+			</p>
+		</div>
+
+		<script src="/-/assets/js/jquery-3.4.1.min.js"></script>
+		<script src="/-/assets/js/remodal.min.js"></script>
+		<script src="/-/assets/js/main.js"></script>
+	</body>
+</html>

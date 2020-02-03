@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css?family=Chivo|Courier+Prime:700|Roboto+Mono:400,500,700&display=swap');
+body, html {
+	background-color: #000;
+	margin: 0;
+}
+
+.navigation {
+	background-color: #fff;
+}
+
+.logo {
+	float: left;
+}
+
+.logo a {
+	font-family: "Courier Prime", monospace !important;
+	font-size: 21px !important;
+	color: #000 !important;
+}
+
+.navigation_list {
+  border-bottom: solid 1px #ccc;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.navigation_item {
+  display: inline;
+  list-style: none;
+  margin: 0 20px;
+}
+
+.navigation_item a {
+	font-family: "Chivo", sans-serif;
+	font-size: 15px;
+	color: #b2b2b2;
+	text-transform: uppercase;
+}
+
+.active a {
+	color: #000;
+}
+
+.active a:hover {
+	color: #303030;
+}
+
+.outline-button, .outline-button:focus {
+	background-color: #000;
+	color: #fff;
+	font-family: "Roboto Mono", monospace;
+	font-weight: 400;
+	font-size: 13px;
+	text-transform: capitalize;
+	border-radius: 0px;
+	border: 2px solid #fff;
+	padding: 2px 40px; 
+	height: initial;
+}
+
+.outline-button:hover {
+	background-color: #fff;
+	color: #000;
+	border: 2px solid #fff;
+}
+
+.upload-button, .upload-button:focus {
+	background-color: #fff;
+	color: #000;
+	font-family: "Roboto Mono", monospace;
+	font-weight: 400;
+	font-size: 13px;
+	text-transform: capitalize;
+	border-radius: 0px;
+	border: 2px solid #fff;
+	margin-left: 25px;
+	height: initial;
+	padding: 2px 40px;
+}
+
+.upload-button:hover {
+	background-color: #dfdfdf;
+	color: #000;
+	border: 2px solid #dfdfdf;
+}
+
+#infos {
+	margin-bottom: 5px;
+}
+
+.files-dir {
+	color: #fff;
+	text-decoration: underline;
+	text-underline-position: under;
+	font-family: "Roboto Mono", monospace;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
+.files {
+	background-color: #080808;
+	border: 2px solid #4b4b4b;
+	padding: 35px;
+	margin-top: 30px;
+}
+
+.file {
+	color: #fff;
+	font-family: "Roboto Mono", monospace;
+	font-size: 14px;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
+.dir {
+	font-family: "Roboto Mono", monospace;
+	font-size: 14px;
+	font-weight: 700;
+	margin-bottom: 15px;
+	cursor: pointer;
+}
+
+.dir span {
+	color: #fff !important;
+}
+
+.footer {
+	left: 0;
+	bottom: 0;
+	width: 60%;
+	border-top: 1px solid #303030;
+	margin: auto;
+	margin-top: 50px;
+}
+
+#footer-logo {
+	font-family: "Courier Prime", monospace;
+	font-size: 18px;
+	color: #fff;
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+#footer-info {
+	font-family: "Roboto Mono", monospace;
+	font-size: 14px;
+	color: #fff;
+	text-align: center;
+}
+
+#footer-info a {
+	color: #fff;
+	font-weight: 700;
+}
+
+#back {
+	font-family: "Roboto Mono", monospace;
+	font-weight: 500;
+	color: #fff;
+	cursor: pointer;
+	display: none;
+}
+
+.remodal {
+	background-color: #080808!important;
+	border: 2px solid #4b4b4b;
+	font-family: "Roboto Mono", monospace;
+	color: #fff !important;
+}
+
+#file-modal-title {
+	font-size: 24px;
+	font-weight: 500;
+}
+
+.remodal-close {
+	display: none !important;
+}
