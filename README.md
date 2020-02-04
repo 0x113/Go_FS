@@ -21,3 +21,15 @@ HTTP Static file server written in Go.
         `docker-compose up`
     * Run via Makefile<br>
         `make`
+
+## TODO
+- [ ] Browser files
+- [ ] Search files
+- [ ] Upload files
+- [ ] Create new folder
+- [ ] browse files by type
+	* [ ] Movies
+	* [ ] TV Shows
+	* [ ] Music
+	* [ ] Docs
+- [ ] QR code
