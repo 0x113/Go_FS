@@ -55,24 +55,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	t, err := template.New("index.html").Delims("[[", "]]").ParseFiles("index.html")
 	if err != nil {
-		errorResponse := &FilesResponse{
-			Directory:   relPath,
-			Files:       []string{},
-			Directories: []string{},
-			Error:       err.Error(),
-		}
-		t.Execute(w, errorResponse)
+		errRes := errorResponse(relPath, err)
+		t.Execute(w, errRes)
 		return
 	}
 	files, dirs, err := scanDir(relPath)
 	if err != nil {
-		errorResponse := &FilesResponse{
-			Directory:   relPath,
-			Files:       []string{},
-			Directories: []string{},
-			Error:       err.Error(),
-		}
-		t.Execute(w, errorResponse)
+		errRes := errorResponse(relPath, err)
+		t.Execute(w, errRes)
 		return
 	}
 
@@ -91,24 +81,14 @@ func serveFile(w http.ResponseWriter, r *http.Request) {
 	// template
 	t, err := template.New("index.html").Delims("[[", "]]").ParseFiles("index.html")
 	if err != nil {
-		errorResponse := &FilesResponse{
-			Directory:   relPath,
-			Files:       []string{},
-			Directories: []string{},
-			Error:       err.Error(),
-		}
-		t.Execute(w, errorResponse)
+		errRes := errorResponse(relPath, err)
+		t.Execute(w, errRes)
 		return
 	}
 	// check if file exists
 	if _, err := os.Stat(relPath); os.IsNotExist(err) {
-		errorResponse := &FilesResponse{
-			Directory:   relPath,
-			Files:       []string{},
-			Directories: []string{},
-			Error:       err.Error(),
-		}
-		t.Execute(w, errorResponse)
+		errRes := errorResponse(relPath, err)
+		t.Execute(w, errRes)
 		return
 	}
 
@@ -140,4 +120,8 @@ func accessControl(h http.Handler) http.Handler {
 
 		h.ServeHTTP(w, r)
 	})
+}
+
+func errorResponse(relPath string, err error) *FilesResponse {
+	return &FilesResponse{relPath, []string{}, []string{}, err.Error()}
 }
