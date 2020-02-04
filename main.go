@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"html/template"
 	"net/http"
 	"os"
@@ -16,6 +15,7 @@ type FilesResponse struct {
 	Directory   string   `json:"directory"`
 	Files       []string `json:"files"`
 	Directories []string `json:"directories"`
+	Error       string   `json:"error"`
 }
 
 type ErrorResponse struct {
@@ -41,7 +41,6 @@ func main() {
 	// endpoints
 	r := mux.NewRouter()
 	r.HandleFunc("/api/v1/file/serve/{path:.*}", serveFile).Methods("GET")
-	r.HandleFunc("/api/v1/videos", videoFiles).Methods("GET", "POST")
 	r.HandleFunc("/{path:.*}", index).Methods("GET", "HEAD")
 	http.Handle("/-/assets/", http.StripPrefix("/-/assets/", http.FileServer(http.Dir("./frontend/assets"))))
 	http.Handle("/", r)
@@ -53,20 +52,35 @@ func main() {
 func index(w http.ResponseWriter, r *http.Request) {
 	path := mux.Vars(r)["path"]
 	relPath := filepath.Join(root, path)
-	files, dirs, err := scanDir(relPath)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
 
 	t, err := template.New("index.html").Delims("[[", "]]").ParseFiles("index.html")
 	if err != nil {
-		log.Fatal(err)
+		errorResponse := &FilesResponse{
+			Directory:   relPath,
+			Files:       []string{},
+			Directories: []string{},
+			Error:       err.Error(),
+		}
+		t.Execute(w, errorResponse)
+		return
 	}
+	files, dirs, err := scanDir(relPath)
+	if err != nil {
+		errorResponse := &FilesResponse{
+			Directory:   relPath,
+			Files:       []string{},
+			Directories: []string{},
+			Error:       err.Error(),
+		}
+		t.Execute(w, errorResponse)
+		return
+	}
+
 	res := &FilesResponse{
 		Directory:   relPath,
 		Files:       files,
 		Directories: dirs,
+		Error:       "",
 	}
 	t.Execute(w, res)
 }
@@ -74,9 +88,27 @@ func index(w http.ResponseWriter, r *http.Request) {
 func serveFile(w http.ResponseWriter, r *http.Request) {
 	path := mux.Vars(r)["path"]
 	relPath := filepath.Join(root, path)
+	// template
+	t, err := template.New("index.html").Delims("[[", "]]").ParseFiles("index.html")
+	if err != nil {
+		errorResponse := &FilesResponse{
+			Directory:   relPath,
+			Files:       []string{},
+			Directories: []string{},
+			Error:       err.Error(),
+		}
+		t.Execute(w, errorResponse)
+		return
+	}
 	// check if file exists
 	if _, err := os.Stat(relPath); os.IsNotExist(err) {
-		w.WriteHeader(http.StatusInternalServerError)
+		errorResponse := &FilesResponse{
+			Directory:   relPath,
+			Files:       []string{},
+			Directories: []string{},
+			Error:       err.Error(),
+		}
+		t.Execute(w, errorResponse)
 		return
 	}
 
@@ -87,15 +119,6 @@ func serveFile(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	http.ServeFile(w, r, relPath)
-}
-
-func videoFiles(w http.ResponseWriter, r *http.Request) {
-	videoFiles := getVideos(root)
-	response := &FilesResponse{
-		Directory: root,
-		Files:     videoFiles,
-	}
-	json.NewEncoder(w).Encode(response)
 }
 
 func logRequest(handler http.Handler) http.Handler {

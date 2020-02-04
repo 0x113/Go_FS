@@ -45,19 +45,23 @@
 			<div class="row">
 				<div class="column">
 					<div class="files">
-						[[ range .Directories ]]
+						[[ if ne .Error "" ]]
+							<p class="error"><span style="color: red;">Error</span>: [[ .Error ]]</p>
+						[[ else ]]
+							[[ range .Directories ]]
 
-						<p class="dir" id="[[ . ]]">
-						<span onClick="setHref([[ . ]])">[[ . ]]/</span>
-						</p>
-						[[ end ]] 
-						[[ range .Files ]] 
-						<p class="file">
-						<span onClick="serveFile([[ . ]])">[[ . ]]</span>
-						<!-- <span onClick="openFileModal([[ . ]])">[[ . ]]</span> -->
-						</p>
+							<p class="dir" id="[[ . ]]">
+							<span onClick="setHref([[ . ]])">[[ . ]]/</span>
+							</p>
+							[[ end ]]
+							[[ range .Files ]]
+							<p class="file">
+							<span onClick="serveFile([[ . ]])">[[ . ]]</span>
+							<!-- <span onClick="openFileModal([[ . ]])">[[ . ]]</span> -->
+							</p>
+							[[ end ]]
+						[[ end ]]
 
-						[[ end ]] 
 					</div>
 				</div>
 			</div>

@@ -177,3 +177,9 @@ body, html {
 .remodal-close {
 	display: none !important;
 }
+
+.error {
+	color: #fff;
+	font-family: "Roboto Mono", monospace;
+	text-align: center;
+}
