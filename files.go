@@ -36,23 +36,6 @@ func scanDir(dirName string) ([]string, []string, error) {
 		files = append(files, f.Name())
 	}
 
-	/*
-		err := filepath.Walk(dirName, func(path string, info os.FileInfo, err error) error {
-			if info.IsDir() {
-				dirs = append(dirs, strings.Replace(path, dirName, "", -1))
-				return nil
-			}
-
-			files = append(files, strings.Replace(path, dirName, "", -1))
-			return nil
-		})
-
-		if err != nil {
-			log.Errorf("Unable to scan dir %s: %v", dirName, err)
-			return []string{}, []string{}, err
-		}
-	*/
-
 	log.Infof("Successfully scanned %s", dirName)
 	return files, dirs, nil
 }
