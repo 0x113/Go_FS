@@ -23,6 +23,7 @@ HTTP Static file server written in Go.
         `make`
 
 ## TODO
+- [ ] Error page
 - [ ] Browser files
 - [ ] Search files
 - [ ] Upload files
