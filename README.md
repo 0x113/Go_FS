@@ -24,7 +24,7 @@ HTTP Static file server written in Go.
 
 ## TODO
 - [x] Error page
-- [ ] Browser files
+- [ ] Browse files
 - [ ] Search files
 - [ ] Upload files
 - [ ] Create new folder
