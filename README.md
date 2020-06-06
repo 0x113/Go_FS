@@ -27,8 +27,8 @@ HTTP Static file server written in Go.
 - [ ] Browse files
 - [ ] Search files
 - [ ] Upload files
-- [ ] Create new folder
-- [ ] browse files by type
+- [x] Create new folder
+- [ ] Browse files by type
 	* [ ] Movies
 	* [ ] TV Shows
 	* [ ] Music
