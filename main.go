@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"html/template"
 	"net/http"
 	"os"
@@ -41,6 +42,7 @@ func main() {
 	// endpoints
 	r := mux.NewRouter()
 	r.HandleFunc("/api/v1/file/serve/{path:.*}", serveFile).Methods("GET")
+	r.HandleFunc("/api/v1/directory/new", createDirectory).Methods("POST")
 	r.HandleFunc("/{path:.*}", index).Methods("GET", "HEAD")
 	http.Handle("/-/assets/", http.StripPrefix("/-/assets/", http.FileServer(http.Dir("./frontend/assets"))))
 	http.Handle("/", r)
@@ -99,6 +101,41 @@ func serveFile(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	http.ServeFile(w, r, relPath)
+}
+
+func createDirectory(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	response := make(map[string]interface{})
+	path := r.PostFormValue("path")
+	newDirName := r.PostFormValue("dir_name")
+	if newDirName == "" {
+		w.WriteHeader(http.StatusInternalServerError)
+		response["error"] = "Unable to create directory"
+		response["new_directory"] = newDirName
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+
+	dirPath := filepath.Join(root, path, newDirName) // new folder path
+	if _, err := os.Stat(dirPath); !os.IsNotExist(err) {
+		w.WriteHeader(http.StatusInternalServerError)
+		response["error"] = "Directory " + dirPath + " already exists"
+		json.NewEncoder(w).Encode(response)
+		return
+	}
+	if _, err := os.Stat(dirPath); os.IsNotExist(err) {
+		if err := os.Mkdir(dirPath, 0777); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			response["error"] = err.Error()
+			json.NewEncoder(w).Encode(response)
+			return
+		}
+		log.Infof("Created new dir: %s", dirPath)
+	}
+	response["message"] = "Successfully created new directory"
+	response["new_directory"] = dirPath
+
+	json.NewEncoder(w).Encode(response)
 }
 
 func logRequest(handler http.Handler) http.Handler {

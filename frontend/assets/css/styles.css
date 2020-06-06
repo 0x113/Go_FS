@@ -162,6 +162,12 @@ body, html {
 	display: none;
 }
 
+.error {
+	color: #fff;
+	font-family: "Roboto Mono", monospace;
+	text-align: center;
+}
+
 .remodal {
 	background-color: #080808!important;
 	border: 2px solid #4b4b4b;
@@ -169,17 +175,31 @@ body, html {
 	color: #fff !important;
 }
 
-#file-modal-title {
-	font-size: 24px;
-	font-weight: 500;
-}
-
 .remodal-close {
 	display: none !important;
 }
 
-.error {
+.modal-title {
+	font-size: 21px;
+}
+
+.modal-content {
+	padding: 10px;
+	text-align: initial;
+}
+
+#folder-name {
 	color: #fff;
 	font-family: "Roboto Mono", monospace;
+}
+
+.gofs-noty {
+	font-family: "Roboto Mono", monospace; 
+}
+
+.noty_body {
+	font-family: "Roboto Mono", monospace;
 	text-align: center;
+	color: #fff; 
+	font-weight: 500;
 }

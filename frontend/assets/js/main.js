@@ -36,22 +36,53 @@ function back() {
 	window.location.href = pathname_split.join("/") + "/"
 }
 
-function openFileModal(file_path) {
-	var pathname = window.location.pathname
-	if (pathname.charAt(pathname.length-1) != "/") {
-		pathname += "/"
-	}
-	
-	var file_location = "/api/v1/file/serve/" + pathname + file_path
-	console.log(file_location)
-
+function newFolderModal() {
 	var options = {
 		hashTracking: false
 	}
-	var inst = $('[data-remodal-id=file-modal]').remodal(options)
-
-	// set values
-	$("#file-modal-title").text(file_path)
+	var inst = $("[data-remodal-id=new-folder-modal]").remodal(options)
 	inst.open()
+	$("#new-folder-form").submit((e) => {
+		createNewDir(e, inst)
+	})
 }
 
+createNewDir = (e, inst) => {
+	let pathname = window.location.pathname
+	let form_data = {
+		"path": decodeURI(pathname),
+		"dir_name": $("input[name=folder-name]").val()
+	}
+	$.ajax({
+		type: "POST",
+		url: "/api/v1/directory/new",
+		data: form_data,
+		dataType: "json",
+		encode: true,
+		success: (response) => {
+			console.log("res", response)
+			new Noty({
+				type: "success",
+				theme: "nest",
+				layout: "topRight",
+				text: "Successfully create new directory",
+				timeout: 5000,
+				progressBar: true
+			}).show();
+			inst.close()
+			location.reload()
+		},
+		error: (jqXHR, textStatus, errorThrown) => {
+			var err = jqXHR.responseJSON["error"]
+			new Noty({
+				type: "error",
+				theme: "nest",
+				layout: "topRight",
+				text: "Unable to create new directory",
+				timeout: 5000,
+				progressBar: true
+			}).show();
+		},
+	})
+	e.preventDefault()
+}

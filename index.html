@@ -11,6 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="/-/assets/css/milligram.min.css">
 		<link rel="stylesheet" type="text/css" href="/-/assets/css/remodal.min.css">
 		<link rel="stylesheet" type="text/css" href="/-/assets/css/remodal-default-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="/-/assets/css/noty.min.css">
 
 	</head>
 
@@ -34,7 +35,7 @@
 				</div>
 				<div class="column">
 					<div class="float-right">
-						<button class="outline-button">New folder</button>
+						<button onClick="newFolderModal()" class="outline-button">New folder</button>
 						<button class="upload-button">Upload file</button>
 					</div>
 				</div>
@@ -49,39 +50,44 @@
 							<p class="error"><span style="color: red;">Error</span>: [[ .Error ]]</p>
 						[[ else ]]
 							[[ range .Directories ]]
-
-							<p class="dir" id="[[ . ]]">
-							<span onClick="setHref([[ . ]])">[[ . ]]/</span>
-							</p>
+								<p class="dir" id="[[ . ]]">
+									<span onClick="setHref([[ . ]])">[[ . ]]/</span>
+								</p>
 							[[ end ]]
 							[[ range .Files ]]
-							<p class="file">
-							<span onClick="serveFile([[ . ]])">[[ . ]]</span>
-							<!-- <span onClick="openFileModal([[ . ]])">[[ . ]]</span> -->
-							</p>
+								<p class="file">
+									<span onClick="serveFile([[ . ]])">[[ . ]]</span>
+								</p>
 							[[ end ]]
 						[[ end ]]
-
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div data-remodal-id="file-modal">
-			<button data-remodal-action="close" class="remodal-close"></button>
-			<h1 id="file-modal-title"></h1>
-			<p id="file-modal-content"></p>
-		</div>
-
 		<div class="footer">
 			<p id="footer-logo">{ GO_FS }</p>
 			<p id="footer-info">
-				Coded by <a href="https://github.com/0x113" target="_blank">0x113</a>
+			Coded by <a href="https://github.com/0x113" target="_blank">0x113</a>
 			</p>
 		</div>
+
+		<div data-remodal-id="new-folder-modal">
+			<button data-remodal-action="close" class="remodal-close"></button>
+			<p class="modal-title">Create new folder</p>
+			<p class="modal-content">
+				<form action="/api/v1/directory/new" method="POST" id="new-folder-form">
+					<label for="folder-name">Folder name</label>
+					<input type="text" name="folder-name" id="folder-name">
+					<input type="submit" value="Create new folder">
+				</form>
+			</p>
+		</div>
+
 
 		<script src="/-/assets/js/jquery-3.4.1.min.js"></script>
 		<script src="/-/assets/js/remodal.min.js"></script>
 		<script src="/-/assets/js/main.js"></script>
+		<script src="/-/assets/js/noty.min.js"></script>
 	</body>
 </html>
