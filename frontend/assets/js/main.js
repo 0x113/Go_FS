@@ -61,14 +61,6 @@ createNewDir = (e, inst) => {
 		encode: true,
 		success: (response) => {
 			console.log("res", response)
-			new Noty({
-				type: "success",
-				theme: "nest",
-				layout: "topRight",
-				text: "Successfully create new directory",
-				timeout: 5000,
-				progressBar: true
-			}).show();
 			inst.close()
 			location.reload()
 		},
