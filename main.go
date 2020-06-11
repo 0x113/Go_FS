@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"html/template"
 	"net/http"
 	"os"
@@ -23,10 +24,22 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
-var root = os.Getenv("FILES_DIR")
+var root string
 
 func main() {
-	port := os.Getenv("PORT")
+	// get current path
+	path, err := os.Getwd()
+	if err != nil {
+		log.Fatal(path)
+	}
+	// flags
+	pathPtr := flag.String("path", path, "directory which will be served via HTTP")
+	portPtr := flag.String("port", "8000", "port on which directory will be server")
+
+	flag.Parse()
+	root = *pathPtr
+	port := *portPtr
+
 	if root == "" {
 		log.Fatal("FILES_DIR environment variable cannot be empty")
 	}
@@ -47,7 +60,7 @@ func main() {
 	http.Handle("/-/assets/", http.StripPrefix("/-/assets/", http.FileServer(http.Dir("./frontend/assets"))))
 	http.Handle("/", r)
 
-	log.Infof("Serving http on port: %s", port)
+	log.Infof("Serving %s on port: %s", root, port)
 	http.ListenAndServe(":"+port, logRequest(accessControl(http.DefaultServeMux)))
 }
 
@@ -96,7 +109,7 @@ func serveFile(w http.ResponseWriter, r *http.Request) {
 
 	// if mp4 file
 	if strings.HasSuffix(relPath, ".mp4") {
-		w.Header().Add("Content-Type", "video/mp4")
+		w.Header().Set("Content-Type", "video/mp4")
 	}
 
 	w.WriteHeader(http.StatusOK)
