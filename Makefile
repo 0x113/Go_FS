@@ -5,7 +5,7 @@ start:
 
 build:
 	@echo "  →  Building binary..."
-	@go build -o ./bin/go_fs
+	@go build -o ./bin/gofs
 
 start-server: 
-	@FILES_DIR=$(FILES_DIR) PORT=$(PORT) ./bin/go_fs
+	@FILES_DIR=$(FILES_DIR) PORT=$(PORT) ./bin/gofs
